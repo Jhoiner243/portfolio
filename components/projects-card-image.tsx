@@ -14,10 +14,28 @@ import TailwindCSS, {
 } from "./icons/icons";
 import { Badge } from "./ui/badge";
 
+type Project = {
+  id: string;
+  type: string;
+  title?: string;
+  subtitle?: string;
+  description?: {
+    contenido: string;
+    tecnologias: string[];
+    iconsTecnologias?: {
+      [key: string]: React.FC<{ width: number; height: number }>;
+    };
+  };
+  size: "small" | "medium" | "large";
+  background: string;
+  content: string;
+  url?: string;
+};
+
 export default function InteractiveCardsDemo() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
-  const projects = [
+  const projects: Project[] = [
     {
       id: "1",
       type: "logo",
@@ -80,11 +98,20 @@ export default function InteractiveCardsDemo() {
     {
       id: "4",
       type: "proyecto 3",
+      title: "Proyecto 3",
+      subtitle: "",
+      description: {
+        contenido: "",
+        tecnologias: [],
+      },
       size: "small",
+      background: "bg-black",
+      content: "proyecto 3",
+      url: "",
     },
   ];
 
-  const getCardContent = (project: any) => {
+  const getCardContent = (project: Project) => {
     switch (project.content) {
       case "logo":
         return (

@@ -133,7 +133,7 @@ export default function PortfolioSection() {
                 animate="visible"
                 className="flex flex-col gap-6 text-white"
               >
-                {connections.map((connection, index) => (
+                {connections.map((connection) => (
                   <motion.div
                     key={connection.name}
                     variants={itemVariants}
