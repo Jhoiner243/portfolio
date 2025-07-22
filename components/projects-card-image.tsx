@@ -1,9 +1,12 @@
 "use client";
 
+import type React from "react";
+
 import { ExternalLink } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { useState } from "react";
+import { useMediaQuery } from "../hooks/use-media-query";
 import { itemVariants } from "../lib/motion";
 import { urlToGo } from "../lib/url-go";
 import TailwindCSS, {
@@ -34,6 +37,7 @@ type Project = {
 
 export default function InteractiveCardsDemo() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const projects: Project[] = [
     {
@@ -51,7 +55,6 @@ export default function InteractiveCardsDemo() {
       content: "logo",
       url: "https://fillstep.site/",
     },
-
     {
       id: "2",
       type: "award",
@@ -118,89 +121,165 @@ export default function InteractiveCardsDemo() {
           <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-lg">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-blue-900/20" />
             <div className="relative">
-              <div className="text-[120px] font-bold text-white opacity-90 select-none">
+              <div
+                className={`${
+                  isMobile ? "text-[60px]" : "text-[120px]"
+                } font-bold text-white opacity-90 select-none`}
+              >
                 FS
               </div>
-              <div className="absolute -top-4 -left-4 w-32 h-32 border-2 border-white/30 rounded-full animate-pulse" />
-              <div className="absolute -bottom-8 -right-8 w-24 h-24 border border-white/20 rounded-full" />
-              <div className="absolute top-1/2 left-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent transform -translate-x-1/2 -translate-y-1/2 rotate-45" />
+              <div
+                className={`absolute -top-4 -left-4 ${
+                  isMobile ? "w-16 h-16" : "w-32 h-32"
+                }  `}
+              />
+              <div
+                className={`absolute -bottom-8 -right-8 ${
+                  isMobile ? "w-12 h-12" : "w-24 h-24"
+                } `}
+              />
+              <div
+                className={`absolute top-1/2 left-1/2 ${
+                  isMobile ? "w-32" : "w-64"
+                } h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent transform -translate-x-1/2 -translate-y-1/2 rotate-45`}
+              />
             </div>
           </div>
         );
-
       case "award":
         return (
-          <div className="relative w-full h-full ">
+          <div className="relative w-full h-full">
             <Image
-              className="absolute inset-0 bg-cover bg-center"
+              className="absolute inset-0 bg-cover bg-center h-full w-full object-cover"
               src={"/project-1.png"}
               alt="proyecto de inventario"
-              width={1000}
-              height={60}
-              style={{
-                backgroundImage: `url('/placeholder.svg?height=400&width=400&text=Inventory+System')`,
-              }}
+              fill
+              sizes={isMobile ? "100vw" : "400px"}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-
             {/* Content */}
-            <div className="absolute bottom-6 left-6 right-6">
-              <h3 className="text-xl font-bold text-white leading-tight mb-2">
+            <div
+              className={`absolute bottom-6 ${
+                isMobile ? "left-4 right-4" : "left-6 right-6"
+              }`}
+            >
+              <h3
+                className={`${
+                  isMobile ? "text-lg" : "text-xl"
+                } font-bold text-white leading-tight mb-2`}
+              >
                 Sistema de Inventario
               </h3>
-              <p className="text-white/80 text-sm mb-3 line-clamp-3">
+              <p
+                className={`text-white/80 ${
+                  isMobile ? "text-xs" : "text-sm"
+                } mb-3 line-clamp-3`}
+              >
                 Solución multitenant para gestión de inventario empresarial
               </p>
-
               <div className="flex gap-2">
-                <ReactIcon width={16} height={16} />
-                <TypeScriptIcon width={16} height={16} />
-                <TailwindCSS width={16} height={16} />
-                <ExpressIcon width={16} height={16} />
-                <PrismaIcons width={16} height={16} />
+                <ReactIcon
+                  width={isMobile ? 14 : 16}
+                  height={isMobile ? 14 : 16}
+                />
+                <TypeScriptIcon
+                  width={isMobile ? 14 : 16}
+                  height={isMobile ? 14 : 16}
+                />
+                <TailwindCSS
+                  width={isMobile ? 14 : 16}
+                  height={isMobile ? 14 : 16}
+                />
+                <ExpressIcon
+                  width={isMobile ? 14 : 16}
+                  height={isMobile ? 14 : 16}
+                />
+                <PrismaIcons
+                  width={isMobile ? 14 : 16}
+                  height={isMobile ? 14 : 16}
+                />
               </div>
             </div>
           </div>
         );
-
       case "proyecto 2":
         return (
-          <div>
-            <iframe
-              src="https://app.spline.design/file/5dd13e94-12d8-476b-a510-62d8f663736d?view=preview"
-              width={800}
-              height={400}
-            />
+          <div className="relative w-full h-full">
+            {!isMobile ? (
+              <iframe
+                src="https://app.spline.design/file/5dd13e94-12d8-476b-a510-62d8f663736d?view=preview"
+                width={800}
+                height={400}
+                className="absolute inset-0"
+              />
+            ) : (
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-purple-900/40 flex items-center justify-center">
+                <div className="text-white text-center">
+                  <div className="text-4xl mb-2">🎨</div>
+                  <div className="text-sm">3D Preview</div>
+                </div>
+              </div>
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-            <Badge className="absolute top-2 ml-2 bg-black text-white">
+            <Badge
+              className={`absolute ${
+                isMobile ? "top-2 left-2" : "top-2 ml-2"
+              } bg-black text-white text-xs`}
+            >
               En desarrollo
             </Badge>
-            <div className="absolute bottom-6 left-6 right-6">
-              <h3 className="text-xl font-bold text-white leading-tight mb-2">
+            <div
+              className={`absolute bottom-6 ${
+                isMobile ? "left-4 right-4" : "left-6 right-6"
+              }`}
+            >
+              <h3
+                className={`${
+                  isMobile ? "text-lg" : "text-xl"
+                } font-bold text-white leading-tight mb-2`}
+              >
                 FS notes
               </h3>
-              <p className="text-white/80 text-sm mb-3 line-clamp-3">
-                Autocompletado con inteligencia artifical para notas de
+              <p
+                className={`text-white/80 ${
+                  isMobile ? "text-xs" : "text-sm"
+                } mb-3 line-clamp-3`}
+              >
+                Autocompletado con inteligencia artificial para notas de
                 enfermería
               </p>
-
               {/* Tech Icons */}
               <div className="flex gap-2">
-                <ReactIcon width={16} height={16} />
-                <TypeScriptIcon width={16} height={16} />
-                <TailwindCSS width={16} height={16} />
-                <PrismaIcons width={16} height={16} />
+                <ReactIcon
+                  width={isMobile ? 14 : 16}
+                  height={isMobile ? 14 : 16}
+                />
+                <TypeScriptIcon
+                  width={isMobile ? 14 : 16}
+                  height={isMobile ? 14 : 16}
+                />
+                <TailwindCSS
+                  width={isMobile ? 14 : 16}
+                  height={isMobile ? 14 : 16}
+                />
+                <PrismaIcons
+                  width={isMobile ? 14 : 16}
+                  height={isMobile ? 14 : 16}
+                />
               </div>
             </div>
           </div>
         );
-
       default:
-        return <div className="w-full h-full bg-gray-800 " />;
+        return <div className="w-full h-full bg-gray-800" />;
     }
   };
 
   const getSizeClasses = (size: string) => {
+    if (isMobile) {
+      return "col-span-1 h-64";
+    }
+
     switch (size) {
       case "large":
         return "col-span-2 row-span-2 h-80";
@@ -214,15 +293,24 @@ export default function InteractiveCardsDemo() {
   };
 
   return (
-    <div className="min-h-screen  p-6 content-end-safe mx-auto">
+    <div
+      className={`min-h-screen ${
+        isMobile ? "p-4" : "p-6"
+      } content-end-safe mx-auto`}
+    >
       <div className="max-w-7xl mx-auto">
         <header className="mb-8">
           <h1 className="text-gray-400 text-sm font-medium tracking-wider uppercase">
             PROYECTOS
           </h1>
         </header>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4  auto-rows-min content-evenly gap-8 mx-auto">
+        <div
+          className={`grid ${
+            isMobile
+              ? "grid-cols-1 gap-6"
+              : "grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8"
+          } auto-rows-min content-evenly mx-auto`}
+        >
           {projects.map((project) => (
             <div
               key={project.id}
@@ -233,8 +321,13 @@ export default function InteractiveCardsDemo() {
                 overflow-hidden
                 cursor-pointer
                 transition-all duration-300 ease-in-out
-                bg-gradient-to-t bg-white 
-                ${hoveredCard === project.id ? "ring-2 ring-white/10" : "/"}
+                bg-gradient-to-t bg-white
+                ${
+                  hoveredCard === project.id
+                    ? "ring-2 ring-white/10 scale-[1.02]"
+                    : ""
+                }
+                ${isMobile ? "shadow-lg" : ""}
               `}
               onMouseEnter={() => setHoveredCard(project.id)}
               onMouseLeave={() => setHoveredCard(null)}
@@ -242,28 +335,44 @@ export default function InteractiveCardsDemo() {
             >
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
               {getCardContent(project)}
-
               {hoveredCard === project.id && project.description && (
                 <motion.div
-                  className="absolute inset-0  backdrop-blur-sm p-6 flex flex-col justify-between  transition-all duration-300 bg-black/80"
+                  className={`absolute inset-0 backdrop-blur-sm ${
+                    isMobile ? "p-4" : "p-6"
+                  } flex flex-col justify-between transition-all duration-300 bg-black/80 rounded-lg`}
                   variants={itemVariants}
                 >
-                  <div className="flex justify-between items-center content-center">
-                    <h3 className="text-white font-bold text-lg mb-3">
+                  <div className="flex justify-between items-start">
+                    <h3
+                      className={`text-white font-bold ${
+                        isMobile ? "text-base" : "text-lg"
+                      } mb-3`}
+                    >
                       {project.title}
                     </h3>
                     {project.url && (
-                      <ExternalLink className="w-5 h-5 relative mb-3" />
+                      <ExternalLink
+                        className={`${
+                          isMobile ? "w-4 h-4" : "w-5 h-5"
+                        } relative mb-3`}
+                      />
                     )}
                   </div>
-                  <p className="text-gray-300 text-sm leading-relaxed mb-4">
+                  <p
+                    className={`text-gray-300 ${
+                      isMobile ? "text-xs" : "text-sm"
+                    } leading-relaxed mb-4 flex-1`}
+                  >
                     {project.description.contenido}
                   </p>
-
                   <div>
                     {project.description.tecnologias.length > 0 && (
                       <div>
-                        <h4 className="text-white font-semibold text-sm mb-2">
+                        <h4
+                          className={`text-white font-semibold ${
+                            isMobile ? "text-xs" : "text-sm"
+                          } mb-2`}
+                        >
                           Tecnologías:
                         </h4>
                         <div className="flex flex-wrap gap-2 mb-3">
@@ -271,7 +380,9 @@ export default function InteractiveCardsDemo() {
                             (tech, index) => (
                               <span
                                 key={index}
-                                className="bg-blue-600/20 text-blue-300 px-2 py-1  text-xs"
+                                className={`bg-blue-600/20 text-blue-300 px-2 py-1 ${
+                                  isMobile ? "text-xs" : "text-xs"
+                                } rounded`}
                               >
                                 {tech}
                               </span>
