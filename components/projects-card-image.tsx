@@ -98,7 +98,7 @@ export default function InteractiveCardsDemo() {
     {
       id: "4",
       type: "proyecto 3",
-      title: "Proyecto 3",
+      title: "",
       subtitle: "",
       description: {
         contenido: "",
@@ -106,7 +106,7 @@ export default function InteractiveCardsDemo() {
       },
       size: "small",
       background: "bg-black",
-      content: "proyecto 3",
+      content: "",
       url: "",
     },
   ];
